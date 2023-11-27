@@ -5,7 +5,7 @@ class GroupsTestMgr(TestMgrBase):
     # this function will be called to do all the steps to setup for the tests, and will be run before any tests
     def setup(self):
         self.tester_name = 'GroupsTestMgr'
-        return False
+        return True
 
     def test_stub(self):
         return False
