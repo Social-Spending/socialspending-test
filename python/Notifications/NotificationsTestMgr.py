@@ -13,19 +13,10 @@ class NotificationsTestMgr(TestMgrBase):
 		self.tester_name = "NotificationsTestMgr"
 		#Create a session to store all of our cookies
 		self.s = requests.Session()
-		return True
-	
-	def test_stub1(self):
-		print("Fetching notifications without loggin in")
-		r = self.s.get(NOTIFICATIONS_ENDPOINT)
-		return r.status_code == 401
-	
-	def test_stub1(self):
-		print("Logging In")
 		r = self.s.post(LOGIN_ENDPOINT, data={"user": USERNAME, "password": PASSWORD, "remember": "false"})
 		return r.status_code == 200
-
-	def test_stub2(self):
+	
+	def test_fetch_notifications(self):
 		passed = True
 		self.notification_ids = []
 		notification_types = ["friend_requests", "transaction_approvals", "completed_transactions", "group_invites"]
@@ -51,22 +42,22 @@ class NotificationsTestMgr(TestMgrBase):
 
 		return passed
 
-	def test_stub3(self):
+	def test_post_no_notification_id(self):
 		print("Performing POST with no notification_id")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"operation": "dismiss"})
 		return r.status_code == 400
 
-	def test_stub4(self):
+	def test_post_no_operation(self):
 		print("Performing POST with no operation")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"transaction_id": 1})
 		return r.status_code == 400
 
-	def test_stub5(self):
+	def test_post_invalid_operation(self):
 		print("Performing POST with invalid operation")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"operation": "test", "transaction_id": 1})
 		return r.status_code == 400
 
-	def test_stub6(self):
+	def test_dismissing_wrong_notification(self):
 		i = 1
 		while i in self.notification_ids:
 			i += 1
@@ -76,7 +67,7 @@ class NotificationsTestMgr(TestMgrBase):
 		return r.status_code == 404
 
 	#*******************Verification that the notification was removed should be done*****************
-	def test_stub7(self):
+	def test_dismissing_valid_notification(self):
 		#Make sure the user has a notification to dismiss
 		if (len(self.notification_ids) == 0):
 			print("No notifications for user, unable to test")
