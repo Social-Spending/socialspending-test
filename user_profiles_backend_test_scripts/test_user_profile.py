@@ -226,6 +226,35 @@ class TestSearchUserProfile(unittest.TestCase):
 
     # TODO FINISH POST tests
 
+    def test_successful_profile_update(self):
+        new_profile_payload = {
+            "username": "level_one_yeti",
+            "email": "level_one_yeti@clashofclans.com",
+        }
+
+        old_profile_payload = {
+            "username": "level_five_yeti",
+            "email": "BJTNoguera@socialspendingapp.com"
+        }
+
+        old_username = self.session.get(USER_PROFILE_URL, data=BJTN_SEARCH_PROFILE).json().get("username")
+        old_email = self.session.get(USER_PROFILE_URL, data=BJTN_SEARCH_PROFILE).json().get("email")
+
+        r = self.session.post(USER_PROFILE_URL, data=new_profile_payload)
+
+        status_code = r.status_code
+        expected_status_code = 200
+
+        new_username = self.session.get(USER_PROFILE_URL, data=BJTN_SEARCH_PROFILE).json().get("username")
+        new_email = self.session.get(USER_PROFILE_URL, data=BJTN_SEARCH_PROFILE).json().get("email")
+
+        # This reverses the email and username change. Very important, DO NOT remove
+        self.session.post(USER_PROFILE_URL, data=old_profile_payload)
+
+        self.assertNotEqual(old_email, new_email)
+        self.assertNotEqual(old_username, new_username)
+        self.assertEqual(status_code, expected_status_code)
+
 
 if __name__ == "__main__":
     unittest.main()
