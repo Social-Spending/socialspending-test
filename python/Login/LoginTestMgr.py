@@ -1,8 +1,21 @@
-# from TestMgrBase import TestMgrBase
-from constants import *
+###############################################################
+# This makes it possible to import TestMgrBase and constants.py
+###############################################################
+import sys
+from os.path import dirname, abspath
 
-class LoginTestMgr():
-#class LoginTestMgr(TestMgrBase):
+# Get parent directory of current file (should be `/path/to/socialspendingapp-tests/python`)
+parent_dir = dirname(dirname(abspath(__file__)))
+
+# Append to sys.path to be able to import TestMgrBase and constants
+sys.path.append(parent_dir)
+###############################################################
+
+from constants import *
+from TestMgrBase import TestMgrBase
+
+
+class LoginTestMgr(TestMgrBase):
     def setup(self):
         self.tester_name = "LoginTestMgr"
 
@@ -39,13 +52,10 @@ class LoginTestMgr():
         status_code, json_response, session_id = self._make_post_request_to_login(payload=BJTN_LOGIN_PAYLOAD)
 
         passed = (
-            status_code == 200 and
-            json_response == {"message": "Success"} and
-            session_id
+                status_code == 200 and
+                json_response == {"message": "Success"} and
+                session_id
         )
-        
-        if not passed:
-            print(f"Test: test_successful_login_with_valid_username_and_password\nstatus_code = {status_code}\njson_response = {json_response}\nsession_id = {session_id}")
 
         return passed
 
@@ -60,13 +70,10 @@ class LoginTestMgr():
         status_code, json_response, session_id = self._make_post_request_to_login(payload=EMPTY_LOGIN_PAYLOAD)
 
         passed = (
-            status_code == 400 and
-            json_response == {"message": "Form fields not found"} and
-            not session_id
+                status_code == 400 and
+                json_response == {"message": "Form fields not found"} and
+                not session_id
         )
-
-        if not passed:
-            print(f"Test: test_unsuccessful_login_without_username_and_password\nstatus_code = {status_code}\njson_response = {json_response}\nsession_id = {session_id}")
 
         return passed
 
@@ -78,16 +85,14 @@ class LoginTestMgr():
         - {"message": "Invalid username and/or password"}
         - No session_id cookie
         """
-        status_code, json_response, session_id = self._make_post_request_to_login(payload=NON_EXISTING_USER_LOGIN_PAYLOAD)
+        status_code, json_response, session_id = self._make_post_request_to_login(
+            payload=NON_EXISTING_USER_LOGIN_PAYLOAD)
 
         passed = (
-            status_code == 401 and
-            json_response == {"message": "Invalid username and/or password"} and
-            not session_id
+                status_code == 401 and
+                json_response == {"message": "Invalid username and/or password"} and
+                not session_id
         )
-
-        if not passed:
-            print(f"Test: test_unsuccessful_login_with_invalid_username_and_password\nstatus_code = {status_code}\njson_response = {json_response}\nsession_id = {session_id}")
 
         return passed
 
@@ -99,20 +104,17 @@ class LoginTestMgr():
         - {"message": "Invalid session_id cookie or cookie not present"}
         - No session_id
         """
-        
+
         status_code, json_response, session_id = self._make_get_request_to_login(payload=BJTN_LOGIN_PAYLOAD, cookie={})
 
         passed = (
-            status_code == 401 and
-            json_response == {"message": "Invalid session_id cookie or cookie not present"} and
-            not session_id
+                status_code == 401 and
+                json_response == {"message": "Invalid session_id cookie or cookie not present"} and
+                not session_id
         )
 
-        if not passed:
-            print(f"Test: test_unsuccessful_login_with_empty_cookie\nstatus_code = {status_code}\njson_response = {json_response}\nsession_id = {session_id}")
-        
         return passed
-    
+
     def test_unsuccessful_login_with_invalid_cookie(self):
         """
         GET request to login with sessino_id = -1
@@ -121,28 +123,14 @@ class LoginTestMgr():
         - {"message": "Invalid session_id cookie or cookie not present"}
         - No session_id
         """
-        
-        status_code, json_response, session_id = self._make_get_request_to_login(payload=BJTN_LOGIN_PAYLOAD, cookie=INVALID_COOKIE)
+
+        status_code, json_response, session_id = self._make_get_request_to_login(payload=BJTN_LOGIN_PAYLOAD,
+                                                                                 cookie=INVALID_COOKIE)
 
         passed = (
-            status_code == 401 and
-            json_response == {"message": "Invalid session_id cookie or cookie not present"} and
-            not session_id
+                status_code == 401 and
+                json_response == {"message": "Invalid session_id cookie or cookie not present"} and
+                not session_id
         )
 
-        if not passed:
-            print(f"Test: test_unsuccessful_login_with_empty_cookie\nstatus_code = {status_code}\njson_response = {json_response}\nsession_id = {session_id}")
-        
         return passed
-
-
-
-# def main():
-#     l = LoginTestMgr()
-#     
-#     l.test_unsuccessful_login_with_empty_cookie()
-#     l.test_unsuccessful_login_without_username_and_password()
-#     l.test_unsuccessful_login_with_invalid_username_and_password()
-#     l.test_successful_login_with_valid_username_and_password()
-#
-# main()

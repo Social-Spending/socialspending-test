@@ -3,7 +3,7 @@ import requests
 LOCALHOST = "http://localhost"
 DEPLOYMENT = "https://socialspendingapp.com"
 
-BASE = DEPLOYMENT
+BASE = LOCALHOST
 
 LOGIN_URL = f"{BASE}/login.php"
 SIGNOUT_URL = f"{BASE}/signout.php"
