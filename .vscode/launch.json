@@ -8,10 +8,11 @@
             "name": "TestRunner (python)",
             "type": "python",
             "request": "launch",
+            "console": "integratedTerminal",
+            "justMyCode": true,
             "cwd": "${workspaceFolder}/python",
             "program": "TestRunner.py",
-            "console": "integratedTerminal",
-            "justMyCode": true
+            "args": ["GroupsTestMgr"]
         }
     ]
 }

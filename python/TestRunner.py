@@ -1,6 +1,7 @@
 import os
 from TestMgrBase import TestMgrBase
 import inspect
+import sys
 
 DELIMITER = '-------------'
 
@@ -67,7 +68,7 @@ class TestMgrRef:
                 result = meth()
             except Exception as err:
                 print(err)
-            print(DELIMITER + ('PASS:' if result else 'FAIL"') + ' Test ' + self.name + '.' + methName + DELIMITER + '\n')
+            print(DELIMITER + ('PASS:' if result else 'FAIL') + ' Test ' + self.name + '.' + methName + DELIMITER + '\n')
             self.tests += 1
             self.successes += 1 if result else 0
         # return if all tests passed
@@ -80,7 +81,9 @@ class TestMgrRef:
 
 
 class TestRunner:
-    def __init__(self):
+    def __init__(self, testMgrList = []):
+        self.testMgrList = testMgrList
+
         # search current dir for all test classes
         # array of TestMgrReg test
         self.testMgrRefList = []
@@ -109,6 +112,17 @@ class TestRunner:
         # only keep references containing a class derived from TestMgrBase
         self.testMgrRefList = [ref for ref in self.testMgrRefList if ref.importCls()]
 
+        # if a non-empty testMgrList was provided, filter to only run classes with the given names
+        if len(testMgrList) > 0:
+            self.testMgrRefList = [ref for ref in self.testMgrRefList if ref.name in testMgrList]
+
+            # display errors for test managers provided but not found
+            tmNames = [ref.name for ref in self.testMgrRefList]
+            for tm in self.testMgrList:
+                if tm not in tmNames:
+                    print('ERROR: Test Manager \''+tm+'\' not found')
+
+
     def runClasses(self):
         for ref in self.testMgrRefList:
             if ref.runSetup():
@@ -117,6 +131,11 @@ class TestRunner:
 
 
 if __name__ == '__main__':
-    testRunner = TestRunner()
+    # get list of test managers to run from command-line args
+    testMgrList = []
+    if len(sys.argv) > 1:
+        testMgrList = sys.argv[1:]
+
+    testRunner = TestRunner(testMgrList)
     testRunner.importClasses()
     testRunner.runClasses()
