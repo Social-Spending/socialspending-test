@@ -1,4 +1,4 @@
-# SocialSpending Test
+# Social Spending Test
 
 This repository contains test scripts to verify the functionality of the Social Spending website.
 
