@@ -13,6 +13,7 @@ sys.path.append(parent_dir)
 
 from constants import *
 from TestMgrBase import TestMgrBase
+import requests
 
 
 class LoginTestMgr(TestMgrBase):
