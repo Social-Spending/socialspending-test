@@ -1,17 +1,19 @@
 import requests
 
-LOCALHOST_BASE = "http://localhost"
-DEPLOYMEN_BASE = "https://socialspendingapp.com"
+LOCALHOST = "http://localhost"
+DEPLOYMENT = "https://socialspendingapp.com"
 
-LOGIN_URL = f"{LOCALHOST_BASE}/login.php"
-SIGNOUT_URL = f"{LOCALHOST_BASE}/signout.php"
-SIGNUP_URL = f"{LOCALHOST_BASE}/signup.php"
-FORGOT_PASSWORD_URL = f"{LOCALHOST_BASE}/forgot_password.php"
+BASE = DEPLOYMENT
 
-USER_ICON_UPLOAD_URL = f"{LOCALHOST_BASE}/user_icon_upload.php"
-USER_INFO_URL = f"{LOCALHOST_BASE}/user_info.php"
-USER_PROFILE_URL = f"{LOCALHOST_BASE}/user_profile.php"
-SEARCH_USERS_URL = f"{LOCALHOST_BASE}/search_users.php"
+LOGIN_URL = f"{BASE}/login.php"
+SIGNOUT_URL = f"{BASE}/signout.php"
+SIGNUP_URL = f"{BASE}/signup.php"
+FORGOT_PASSWORD_URL = f"{BASE}/forgot_password.php"
+
+USER_ICON_UPLOAD_URL = f"{BASE}/user_icon_upload.php"
+USER_INFO_URL = f"{BASE}/user_info.php"
+USER_PROFILE_URL = f"{BASE}/user_profile.php"
+SEARCH_USERS_URL = f"{BASE}/search_users.php"
 
 CHECK = u"\u2705"
 CROSS = u"\u274C"

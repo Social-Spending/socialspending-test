@@ -137,13 +137,12 @@ class LoginTestMgr():
 
 
 
-def main():
-    l = LoginTestMgr()
-    
-    l.test_unsuccessful_login_with_empty_cookie()
-    l.test_unsuccessful_login_without_username_and_password()
-    l.test_unsuccessful_login_with_invalid_username_and_password()
-    l.test_successful_login_with_valid_username_and_password()
-
-
-main()
+# def main():
+#     l = LoginTestMgr()
+#     
+#     l.test_unsuccessful_login_with_empty_cookie()
+#     l.test_unsuccessful_login_without_username_and_password()
+#     l.test_unsuccessful_login_with_invalid_username_and_password()
+#     l.test_successful_login_with_valid_username_and_password()
+#
+# main()
