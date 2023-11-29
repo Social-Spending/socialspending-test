@@ -11,14 +11,18 @@ PASSWORD = "password"
 class NotificationsTestMgr(TestMgrBase):
 	def setup(self):
 		self.tester_name = "NotificationsTestMgr"
+
+		#Array to store the user's notifications
+		self.notification_ids = []
+
 		#Create a session to store all of our cookies
 		self.s = requests.Session()
 		r = self.s.post(LOGIN_ENDPOINT, data={"user": USERNAME, "password": PASSWORD, "remember": "false"})
 		return r.status_code == 200
 	
-	def test_fetch_notifications(self):
+	#This test needs to run first, so we put a 1 in the beginning of the name
+	def test_1fetch_notifications(self):
 		passed = True
-		self.notification_ids = []
 		notification_types = ["friend_requests", "transaction_approvals", "completed_transactions", "group_invites"]
 
 		print("Fetching notifications")
