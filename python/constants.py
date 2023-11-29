@@ -3,7 +3,7 @@ import requests
 LOCALHOST = "http://localhost"
 DEPLOYMENT = "https://socialspendingapp.com"
 
-BASE = LOCALHOST
+BASE = DEPLOYMENT
 
 LOGIN_URL = f"{BASE}/login.php"
 SIGNOUT_URL = f"{BASE}/signout.php"
@@ -66,6 +66,12 @@ BJTN_LOGIN_PAYLOAD = {
     "remember": "false"
 }
 
+BJTN_TEST_LOGIN_PAYLOAD = {
+    "user": "BJTN_test",
+    "password": "password",
+    "remember": "false",
+}
+
 BJTN_USER_INFO = {
     "user_id": 5,
     "username": "level_five_yeti",
@@ -80,29 +86,34 @@ BJTN_USER_PROFILE = {
     "message": "Success"
 }
 
-MATT_D_SEARCH_PROFILE_RESPONSE = {
+MATT_D_SEARCH_PROFILE = {
     "user_id": 1,
     "user": "Roasted715Jr",
 }
 
-MATT_F_SEARCH_PROFILE_RESPONSE = {
+MATT_F_SEARCH_PROFILE = {
     "user_id": 2,
     "user": "Soap_Ninja",
 }
 
-NICK_J_SEARCH_PROFILE_RESPONSE = {
+NICK_J_SEARCH_PROFILE = {
     "user_id": 3,
     "user": "Vanquisher",
 }
 
-RYDER_R_SEARCH_PROFILE_RESPONSE = {
+RYDER_R_SEARCH_PROFILE = {
     "user_id": 4,
     "user": "Vasagle",
 }
 
-BJTN_SEARCH_PROFILE_RESPONSE = {
+BJTN_SEARCH_PROFILE = {
     "user_id": 5,
     "user": "level_five_yeti",
+}
+
+BJTN_TEST_SEARCH_PROFILE = {
+    "user_id": 8,
+    "username": "BJTN_test,"
 }
 
 NON_EXISTING_USERNAME = {
