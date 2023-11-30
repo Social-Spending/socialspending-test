@@ -18,7 +18,11 @@ class NotificationsTestMgr(TestMgrBase):
 		#Create a session to store all of our cookies
 		self.s = requests.Session()
 		r = self.s.post(LOGIN_ENDPOINT, data={"user": USERNAME, "password": PASSWORD, "remember": "false"})
-		return r.status_code == 200
+		if (r.status_code != 200):
+			print(json.loads(r.text)["message"])
+			return False
+
+		return True
 	
 	#This test needs to run first, so we put a 1 in the beginning of the name
 	def test_1fetch_notifications(self):
@@ -28,7 +32,7 @@ class NotificationsTestMgr(TestMgrBase):
 		print("Fetching notifications")
 		r = self.s.get(NOTIFICATIONS_ENDPOINT)
 		if (r.status_code != 200):
-			print("Request did not respond with 200")
+			print(json.loads(r.text)["message"])
 			return False
 
 		data = json.loads(r.text)
@@ -49,17 +53,29 @@ class NotificationsTestMgr(TestMgrBase):
 	def test_post_no_notification_id(self):
 		print("Performing POST with no notification_id")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"operation": "dismiss"})
-		return r.status_code == 400
+		if (r.status_code != 400):
+			print(json.loads(r.text)["message"])
+			return False
+
+		return True
 
 	def test_post_no_operation(self):
 		print("Performing POST with no operation")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"transaction_id": 1})
-		return r.status_code == 400
+		if (r.status_code != 400):
+			print(json.loads(r.text)["message"])
+			return False
+
+		return True
 
 	def test_post_invalid_operation(self):
 		print("Performing POST with invalid operation")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"operation": "test", "transaction_id": 1})
-		return r.status_code == 400
+		if (r.status_code != 400):
+			print(json.loads(r.text)["message"])
+			return False
+
+		return True
 
 	def test_dismissing_wrong_notification(self):
 		i = 1
@@ -68,7 +84,11 @@ class NotificationsTestMgr(TestMgrBase):
 
 		print(f"Dismissing a notification that user does not have access to (id {i})")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"operation": "dismiss", "notification_id": i})
-		return r.status_code == 404
+		if (r.status_code != 404):
+			print(json.loads(r.text)["message"])
+			return False
+
+		return True
 
 	#*******************Verification that the notification was removed should be done*****************
 	def test_dismissing_valid_notification(self):
@@ -80,4 +100,8 @@ class NotificationsTestMgr(TestMgrBase):
 		#Dismiss the first notification in the list
 		print(f"Dismissing notification (id {self.notification_ids[0]})")
 		r = self.s.post(NOTIFICATIONS_ENDPOINT, json={"operation": "dismiss", "notification_id": self.notification_ids[0]})
-		return r.status_code == 200
+		if (r.status_code != 200):
+			print(json.loads(r.text)["message"])
+			return False
+
+		return True
