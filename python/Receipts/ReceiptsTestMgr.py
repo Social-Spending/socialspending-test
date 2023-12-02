@@ -1,6 +1,7 @@
 from TestMgrBase import TestMgrBase
 import requests
 import json
+import os
 
 SERVER = "http://localhost"
 LOGIN_ENDPOINT = SERVER + "/login.php"
@@ -46,8 +47,9 @@ class ReceiptsTestMgr(TestMgrBase):
 
 	#Test upload with no existing receipt
 	def test_1_upload_receipt(self):
-		receipt = open("Images/Normal_Receipt.jpg")
-		r = self.s.post(RECEIPT_UPOAD_ENDPOINT, data={"transaction_id": self.transaction_id}, files={"receipt": receipt})
+		receipt_path = os.path.dirname(os.path.abspath(__file__)) + "/Images/Normal_Receipt.jpg"
+		r = self.s.post(RECEIPT_UPOAD_ENDPOINT, data={"transaction_id": self.transaction_id}, files={"receipt": open(receipt_path, "rb")})
+
 		if (r.status_code != 200):
 			print(json.loads(r.text)["message"])
 			return False
@@ -55,25 +57,46 @@ class ReceiptsTestMgr(TestMgrBase):
 		return True
  
 	#Test replacing receipt
-	def test_replace_receipt(self):
-		return False
+	def test_2_replace_receipt(self):
+		#Perform the same test again since it's the same process
+		return self.test_1_upload_receipt()
 
 	#Test missing transaction_id
 	def test_missing_transaction_id(self):
-		return False
+		receipt_path = os.path.dirname(os.path.abspath(__file__)) + "/Images/Normal_Receipt.jpg"
+		r = self.s.post(RECEIPT_UPOAD_ENDPOINT, files={"receipt": open(receipt_path, "rb")})
+		
+		if (r.status_code != 400):
+			print(json.loads(r.text)["message"])
+			return False
+		
+		return True
  
 	#Test missing image
 	def test_missing_image(self):
-		return False
+		r = self.s.post(RECEIPT_UPOAD_ENDPOINT, data={"transaction_id": self.transaction_id})
+
+		if (r.status_code != 400):
+			print(json.loads(r.text)["message"])
+			return False
+		
+		return True
 
 	#Test wrong filetype
 	def test_wrong_filetype(self):
-		return False
+		receipt_path = os.path.dirname(os.path.abspath(__file__)) + "/Images/Wrong_Filetype.ico"
+		r = self.s.post(RECEIPT_UPOAD_ENDPOINT, data={"transaction_id": self.transaction_id}, files={"receipt": open(receipt_path, "rb")})
+
+		if (r.status_code != 400):
+			print(json.loads(r.text)["message"])
+			return False
+		
+		return True
 
 	#Test too big of an image
-	def test_large_file(self):
-		return False
+	# def test_large_file(self):
+	# 	return False
 
 	#Test rotated image (?)
-	def test_rotated_image(self):
-		return False
+	# def test_rotated_image(self):
+	# 	return False
