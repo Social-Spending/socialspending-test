@@ -25,7 +25,7 @@ class NotificationsTestMgr(TestMgrBase):
 		return True
 	
 	#This test needs to run first, so we put a 1 in the beginning of the name
-	def test_1fetch_notifications(self):
+	def test_1_fetch_notifications(self):
 		passed = True
 		notification_types = ["friend_requests", "transaction_approvals", "completed_transactions", "group_invites"]
 
