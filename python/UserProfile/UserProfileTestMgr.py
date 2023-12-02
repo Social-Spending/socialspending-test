@@ -157,7 +157,7 @@ class UserProfileTestMgr(TestMgrBase):
 
     def test_update_to_invalid_username(self):
         s = requests.session()
-        s.post(LOGIN_URL, data=BJTN_TEST_LOGIN_PAYLOAD)
+        s.post(LOGIN_URL, data=BJTN_LOGIN_PAYLOAD)
 
         r = s.post(USER_PROFILE_URL, params={"username": "abc"})
 
@@ -173,7 +173,7 @@ class UserProfileTestMgr(TestMgrBase):
 
     def test_update_to_invalid_email(self):
         s = requests.session()
-        s.post(LOGIN_URL, data=BJTN_TEST_LOGIN_PAYLOAD)
+        s.post(LOGIN_URL, data=BJTN_LOGIN_PAYLOAD)
 
         r = s.post(USER_PROFILE_URL, params={"email": "not_an_email"})
 
@@ -189,7 +189,7 @@ class UserProfileTestMgr(TestMgrBase):
 
     def test_update_to_existing_username(self):
         s = requests.session()
-        s.post(LOGIN_URL, data=BJTN_TEST_LOGIN_PAYLOAD)
+        s.post(LOGIN_URL, data=BJTN_LOGIN_PAYLOAD)
 
         r = s.post(USER_PROFILE_URL, params={"username": "level_five_yeti"})
 
@@ -205,7 +205,7 @@ class UserProfileTestMgr(TestMgrBase):
 
     def test_update_to_existing_email(self):
         s = requests.session()
-        s.post(LOGIN_URL, data=BJTN_TEST_LOGIN_PAYLOAD)
+        s.post(LOGIN_URL, data=BJTN_LOGIN_PAYLOAD)
 
         r = s.post(USER_PROFILE_URL, params={"email": "BJTNoguera@socialspendingapp.com"})
 
@@ -221,7 +221,7 @@ class UserProfileTestMgr(TestMgrBase):
 
     def test_update_to_invalid_password(self):
         s = requests.session()
-        s.post(LOGIN_URL, data=BJTN_TEST_LOGIN_PAYLOAD)
+        s.post(LOGIN_URL, data=BJTN_LOGIN_PAYLOAD)
 
         r = s.post(USER_PROFILE_URL, params={"password": "pass"})
 
