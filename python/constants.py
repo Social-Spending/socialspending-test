@@ -3,7 +3,7 @@ import requests
 LOCALHOST = "http://localhost"
 DEPLOYMENT = "https://socialspendingapp.com"
 
-BASE = DEPLOYMENT
+BASE = LOCALHOST
 
 LOGIN_URL = f"{BASE}/login.php"
 SIGNOUT_URL = f"{BASE}/signout.php"
@@ -14,9 +14,6 @@ USER_ICON_UPLOAD_URL = f"{BASE}/user_icon_upload.php"
 USER_INFO_URL = f"{BASE}/user_info.php"
 USER_PROFILE_URL = f"{BASE}/user_profile.php"
 SEARCH_USERS_URL = f"{BASE}/search_users.php"
-
-CHECK = u"\u2705"
-CROSS = u"\u274C"
 
 INVALID_COOKIE = requests.cookies.cookiejar_from_dict({"session_id": "-1"})
 
